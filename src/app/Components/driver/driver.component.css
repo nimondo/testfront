@@ -1,3 +1,9 @@
 .btn-w {
   width: 120px;
 }
+
+.container {
+  width: 100% !important;
+  margin-top: 20px !important;
+  margin-bottom: 10px !important;
+}
