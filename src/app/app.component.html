@@ -4,8 +4,7 @@
     <a routerLink="/home" class="logo d-flex align-items-center me-auto">
       <h1 class="sitename">Gozem</h1>
     </a>
-
-    <nav id="navmenu" class="navmenu">
+    <nav id="navmenu" class="navmenu" [ngClass]="{'mobile-nav-active': isMobileNavActive}">
       <ul>
         <li *ngIf="isLoggedIn" routerLinkActive="active">
           <a routerLink="/user" class="nav_menu_link">User</a>
@@ -29,8 +28,9 @@
         <li routerLinkActive="active" *ngIf="!isLoggedIn">
           <a routerLink="/signup" class="nav_menu_link">SignUp</a>
         </li>
+
       </ul>
-      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      <i class="mobile-nav-toggle d-xl-none bi" [ngClass]="isMobileNavActive ? 'bi-x' : 'bi-list'"></i>
     </nav>
 
     <a class="btn-getstarted" *ngIf="isLoggedIn">{{ getUserName() }}</a>

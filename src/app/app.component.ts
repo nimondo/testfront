@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { AuthService } from './Services/auth.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class AppComponent {
     ngOnInit(): void {
       this.isLoggedIn = !!this.authService.getToken();
       this.role = this.authService.getRole();
+      this.setupMobileNav();
     }
 
   //Method to
@@ -26,5 +28,42 @@ export class AppComponent {
     //Method to logout
     signOut() {
       this.authService.signOut();
+    }
+
+    setupMobileNav(): void {
+      const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle') as HTMLElement;
+  
+      const mobileNavToogle = () => {
+        document.querySelector('body')!.classList.toggle('mobile-nav-active');
+        mobileNavToggleBtn.classList.toggle('bi-list');
+        mobileNavToggleBtn.classList.toggle('bi-x');
+      };
+  
+      mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
+  
+      // Hide mobile nav on same-page/hash links
+      document.querySelectorAll('#navmenu a').forEach(navmenu => {
+        navmenu.addEventListener('click', () => {
+          if (document.querySelector('.mobile-nav-active')) {
+            mobileNavToogle();
+          }
+        });
+      });
+  
+      // Toggle mobile nav dropdowns
+      document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
+        navmenu.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          // Convert the parentNode to an HTMLElement
+          const parentElement = (e.target as HTMLElement).parentNode as HTMLElement;
+          parentElement.classList.toggle('active');
+          
+          const siblingElement = parentElement.nextElementSibling as HTMLElement;
+          siblingElement.classList.toggle('dropdown-active');
+          
+          e.stopImmediatePropagation();
+        });
+      });
     }
 }
