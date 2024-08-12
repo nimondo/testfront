@@ -29,7 +29,12 @@ export class AppComponent {
     signOut() {
       this.authService.signOut();
     }
-
+    hideMenu(){
+      const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle') as HTMLElement;
+      document.querySelector('body')!.classList.toggle('mobile-nav-active');
+        mobileNavToggleBtn.classList.toggle('bi-list');
+        mobileNavToggleBtn.classList.toggle('bi-x');
+    }
     setupMobileNav(): void {
       const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle') as HTMLElement;
   
@@ -43,7 +48,9 @@ export class AppComponent {
   
       // Hide mobile nav on same-page/hash links
       document.querySelectorAll('#navmenu a').forEach(navmenu => {
+        console.log("here is nav menu", navmenu)
         navmenu.addEventListener('click', () => {
+          console.log("ok",document.querySelector('.mobile-nav-active'))
           if (document.querySelector('.mobile-nav-active')) {
             mobileNavToogle();
           }
